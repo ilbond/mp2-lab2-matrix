@@ -255,7 +255,16 @@ TMatrix<ValType>::TMatrix(const TMatrix<ValType> &mt):
 
 template <class ValType> // конструктор преобразования типа
 TMatrix<ValType>::TMatrix(const TVector<TVector<ValType> > &mt):
-  TVector<TVector<ValType> >(mt) {}
+  TVector<TVector<ValType> >(mt) {
+	if (pVector[0].GetSize()!=GetSize() )
+		throw 1;
+
+	for (int i = 0; i < GetSize(); i++)
+	{
+		if (pVector[i].GetStartIndex() != i || ((pVector[i].GetSize() + pVector[i].GetStartIndex()) != GetSize()))
+			throw 1;
+	}
+}
 
 template <class ValType> // сравнение
 bool TMatrix<ValType>::operator==(const TMatrix<ValType> &mt) const
